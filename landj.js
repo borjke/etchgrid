@@ -11,24 +11,57 @@ for(let i = 0; i < h; i++)
     bodi.appendChild(boxy);
 }
 
-const bof = document.querySelectorAll('.box');
+var bof = document.querySelectorAll('.box');
 
-bof.forEach((box) => {
+function myFunc() {
+  this.classList.add('yup');
+  console.log('yup');
+}
 
-    // and for each one we add a 'click' listener
-    box.addEventListener('click', () => {
-      box.classList.toggle('yup');
-      console.log('yup');
+let mousedown = 0;
+window.onmousedown = () => {
+  ++mousedown;
+  if(mousedown) {
+    bof.forEach((box) => {
+      box.addEventListener('mousedown', () => {
+        box.classList.add('yup');
+      });
+      box.addEventListener('mouseover', myFunc);
     });
+    console.log('mouse is down')
+  }
+}
+
+window.onmouseup = () => {  
+  --mousedown;
+  bof.forEach((box) => {
+    box.removeEventListener('mouseover', myFunc);
   });
+  console.log('mouse is up');
+}
+  /*  
+    bof.forEach((box) => {
+      box.addEventListener('mouseover', () => {
+        box.classList.add('yup');
+        console.log('yup');
+      });
+    });
+   */
+
 
 const bChoose = document.querySelector('.rest');
 
 bChoose.addEventListener('click', () => {
-  removeAllChildNodes(bodi);
-
   let choiceX = prompt("What x dimension would you like?");
   let choiceY = prompt("What y dimension would you like?");
+
+  if(choiceX !== choiceY)
+  {
+    alert("not valid");
+    return;
+  }
+
+  removeAllChildNodes(bodi);
 
   bodi.style.gridTemplateColumns = `repeat(${choiceY}, auto)`;
   bodi.style.gridTemplateRows = `repeat(${choiceX}, auto)`;
@@ -42,16 +75,38 @@ bChoose.addEventListener('click', () => {
      bodi.appendChild(boxy);
   } 
 
-  var boffy = document.querySelectorAll('.box');
+  bof = document.querySelectorAll('.box');
 
-  boffy.forEach((box) => {
+  let mousedown = 0;
+  window.onmousedown = () => {
+  ++mousedown;
+  if(mousedown) {
+    bof.forEach((box) => {
+      box.addEventListener('mousedown', () => {
+        box.classList.add('yup');
+      });
+      box.addEventListener('mouseover', myFunc);
+      });
+      console.log('mouse is down')
+    }
+  }
 
-    // and for each one we add a 'click' listener
-    box.addEventListener('click', () => {
-      box.classList.toggle('yup');
-      console.log('yup');
+  window.onmouseup = () => {  
+    --mousedown;
+    bof.forEach((box) => {
+     box.removeEventListener('mouseover', myFunc);
     });
-  });
+    console.log('mouse is up');
+  }
+});
+
+const erB = document.querySelector('.eraseB');
+
+  erB.addEventListener('click', () => {
+   bof.forEach((box) => {
+      box.classList.remove('yup');
+      console.log('yup');
+   });
 });
 
 function removeAllChildNodes(parent) {
